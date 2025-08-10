@@ -11,142 +11,246 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
 <style>
-body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #cbd5e1; overflow-x: hidden; }
-header { position: fixed; width: 100%; top: 0; left: 0; z-index: 50; background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); padding: 1rem 0; border-bottom: 1px solid rgba(56, 189, 248, 0.2); }
-.glass-effect { background-color: rgba(30, 41, 59, 0.5); backdrop-filter: blur(15px); border: 1px solid rgba(56, 189, 248, 0.15); box-shadow: 0 0 20px rgba(56, 189, 248, 0.1); }
-/* Flip card */
-.project-card-container { perspective: 1000px; }
-.project-card { position: relative; width: 100%; height: 250px; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; }
-.project-card:hover { transform: rotateY(180deg); }
-.project-card-front, .project-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 0.75rem; padding: 1.5rem; }
-.project-card-back { transform: rotateY(180deg); background-color: rgba(15,23,42,0.9); border: 1px solid rgba(56, 189, 248, 0.3); }
-.progress-bar-bg { background: #1e293b; border-radius: 9999px; height: 0.5rem; overflow: hidden; }
-.progress-bar-fill { background: linear-gradient(90deg,#0ea5e9,#38bdf8); height: 100%; transition: width 1.5s ease; }
+    /* Base styling for the body */
+    body { 
+        font-family: 'Inter', sans-serif; 
+        background-color: #0f172a; 
+        color: #cbd5e1; 
+        overflow-x: hidden; 
+    }
+    
+    /* Enable full-page scroll snapping */
+    html {
+        scroll-snap-type: y mandatory;
+    }
+
+    /* Define each section as a snap point */
+    section {
+        scroll-snap-align: start;
+    }
+
+    /* Header styling for a fixed, blurred navigation bar */
+    header { 
+        position: fixed; 
+        width: 100%; 
+        top: 0; 
+        left: 0; 
+        z-index: 50; 
+        background-color: rgba(15, 23, 42, 0.6); 
+        backdrop-filter: blur(10px); 
+        padding: 1rem 0; 
+        border-bottom: 1px solid rgba(56, 189, 248, 0.2); 
+    }
+
+    /* Glass effect for cards and buttons */
+    .glass-effect { 
+        background-color: rgba(30, 41, 59, 0.5); 
+        backdrop-filter: blur(15px); 
+        border: 1px solid rgba(56, 189, 248, 0.15); 
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.1); 
+    }
+
+    /* Flip card animation for projects */
+    .project-card-container { 
+        perspective: 1000px; 
+    }
+    .project-card { 
+        position: relative; 
+        width: 100%; 
+        height: 250px; 
+        transform-style: preserve-3d; 
+        transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1); 
+        cursor: pointer; 
+    }
+    .project-card:hover { 
+        transform: rotateY(180deg); 
+    }
+    .project-card-front, .project-card-back { 
+        position: absolute; 
+        width: 100%; 
+        height: 100%; 
+        backface-visibility: hidden; 
+        border-radius: 0.75rem; 
+        padding: 1.5rem; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .project-card-back { 
+        transform: rotateY(180deg); 
+        background-color: rgba(15, 23, 42, 0.95); 
+        border: 1px solid rgba(56, 189, 248, 0.3); 
+    }
+
+    /* Background floating icons animation */
+    #background-icons {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: -1;
+        overflow: hidden;
+    }
+    .floating-icon {
+        position: absolute;
+        color: rgba(56, 189, 248, 0.08);
+        animation: float 20s infinite linear;
+    }
+    .floating-icon:nth-child(1) { font-size: 5rem; top: 15%; left: 10%; animation-duration: 25s; }
+    .floating-icon:nth-child(2) { font-size: 3rem; top: 25%; left: 80%; animation-duration: 18s; }
+    .floating-icon:nth-child(3) { font-size: 6rem; top: 70%; left: 5%; animation-duration: 22s; }
+    .floating-icon:nth-child(4) { font-size: 4rem; top: 80%; left: 90%; animation-duration: 28s; }
+    .floating-icon:nth-child(5) { font-size: 3.5rem; top: 50%; left: 50%; animation-duration: 15s; }
+    .floating-icon:nth-child(6) { font-size: 4.5rem; top: 5%; left: 40%; animation-duration: 20s; }
+
+    @keyframes float {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+        100% { transform: translateY(0) rotate(360deg); }
+    }
 </style>
 </head>
 <body>
+
+<!-- Floating Background Icons -->
+<div id="background-icons">
+    <i class="fas fa-chart-bar floating-icon"></i>
+    <i class="fab fa-python floating-icon"></i>
+    <i class="fas fa-database floating-icon"></i>
+    <i class="fas fa-chart-pie floating-icon"></i>
+    <i class="fas fa-cogs floating-icon"></i>
+    <i class="fas fa-file-excel floating-icon"></i>
+</div>
 
 <!-- HEADER -->
 <header>
     <nav class="container mx-auto flex justify-between items-center px-6">
         <a href="#home" class="text-slate-100 text-2xl font-bold">Dileep.dev</a>
-        <div class="hidden md:flex space-x-6">
-            <a href="#home" class="hover:text-sky-400">Home</a>
-            <a href="#about" class="hover:text-sky-400">About</a>
-            <a href="#skills" class="hover:text-sky-400">Skills</a>
-            <a href="#experience" class="hover:text-sky-400">Experience</a>
-            <a href="#projects" class="hover:text-sky-400">Projects</a>
-            <a href="#certifications" class="hover:text-sky-400">Certifications</a>
-            <a href="#contact" class="hover:text-sky-400">Contact</a>
+        <div class="hidden md:flex space-x-6 text-slate-300">
+            <a href="#home" class="hover:text-sky-400 transition-colors duration-300">Home</a>
+            <a href="#about" class="hover:text-sky-400 transition-colors duration-300">About</a>
+            <a href="#skills" class="hover:text-sky-400 transition-colors duration-300">Skills</a>
+            <a href="#experience" class="hover:text-sky-400 transition-colors duration-300">Experience</a>
+            <a href="#projects" class="hover:text-sky-400 transition-colors duration-300">Projects</a>
+            <a href="#certifications" class="hover:text-sky-400 transition-colors duration-300">Certifications</a>
+            <a href="#contact" class="hover:text-sky-400 transition-colors duration-300">Contact</a>
         </div>
+        <!-- Mobile Menu Button (optional) -->
     </nav>
 </header>
 
 <!-- HERO -->
-<section id="home" class="relative min-h-screen flex items-center justify-center text-center px-6">
-    <div data-aos="fade-up">
-        <p class="text-xl mb-2">Hi, I'm <span class="text-sky-400 font-bold">Dileep Suthar</span></p>
-        <h1 class="text-4xl sm:text-6xl font-black mb-4">
-            <span class="text-sky-400">A</span> <span id="typed-text"></span>
+<section id="home" class="relative h-screen flex items-center justify-center text-center px-6">
+    <div data-aos="fade-up" class="z-10">
+        <p class="text-xl md:text-2xl mb-2 text-slate-300">Hi, I'm <span class="text-sky-400 font-bold">Dileep Suthar</span></p>
+        <h1 class="text-4xl sm:text-6xl font-black mb-4 text-slate-100">
+            A <span id="typed-text" class="text-sky-400"></span>
         </h1>
-        <p class="max-w-2xl mx-auto mb-6">
-            Detail-oriented Data Analyst skilled in Excel, SQL, Power BI, and Python — transforming raw data into actionable insights.
+        <p class="max-w-2xl mx-auto mb-8 text-slate-400">
+            Detail-oriented Data Analyst skilled in Excel, SQL, Power BI, and Python — transforming raw data into actionable business intelligence and strategic insights.
         </p>
         <div class="flex justify-center gap-4">
-            <a href="#projects" class="bg-sky-600 hover:bg-sky-500 px-6 py-3 rounded-full">Explore My Work</a>
-            <a href="Dileep_Suthar_CV.pdf" download class="glass-effect px-6 py-3 rounded-full border border-sky-400">Download CV</a>
+            <a href="#projects" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 rounded-full transition-transform transform hover:scale-105">Explore My Work</a>
+            <a href="Dileep_Suthar_CV.pdf" download class="glass-effect text-slate-100 px-8 py-3 rounded-full border border-sky-400 hover:bg-sky-400/20 transition-all duration-300">Download CV</a>
         </div>
     </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="py-20 bg-slate-900/50" data-aos="fade-up">
+<section id="about" class="h-screen flex flex-col items-center justify-center bg-slate-900/50" data-aos="fade-up">
     <div class="container mx-auto px-6 text-center">
-        <h2 class="text-4xl font-bold mb-8">About Me</h2>
-        <p class="max-w-3xl mx-auto text-lg">
-            I am a Data Analyst with a strong foundation in statistics, data visualization, and business intelligence. I specialize in collecting, cleaning, and interpreting large datasets to drive strategic decision-making.
+        <h2 class="text-4xl font-bold mb-8 text-slate-100">About Me</h2>
+        <div class="flex justify-center">
+            <img src="https://placehold.co/150x150/0f172a/38bdf8?text=DS" alt="Dileep Suthar" class="rounded-full mb-6 border-4 border-sky-500/50">
+        </div>
+        <p class="max-w-3xl mx-auto text-lg text-slate-400">
+            I am a passionate Data Analyst with a strong foundation in statistics, data visualization, and business intelligence. I specialize in collecting, cleaning, and interpreting complex datasets to uncover trends and drive strategic decision-making. My goal is to help organizations leverage their data as a critical asset.
         </p>
     </div>
 </section>
 
 <!-- SKILLS -->
-<section id="skills" class="py-20" data-aos="fade-up">
+<section id="skills" class="h-screen flex flex-col items-center justify-center" data-aos="fade-up">
     <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-12">Skills</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <h2 class="text-4xl font-bold text-center mb-16 text-slate-100">Technical Skills</h2>
+        <div class="space-y-12">
+            <!-- Data Analysis & Visualization -->
             <div>
-                <p>Excel</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" data-value="95%"></div></div>
+                <h3 class="text-2xl font-bold text-sky-400 text-center mb-8">Data Analysis & Visualization</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fas fa-file-excel text-3xl mb-2 text-green-400"></i><p>Excel</p></div>
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fas fa-chart-bar text-3xl mb-2 text-yellow-400"></i><p>Power BI</p></div>
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fas fa-table text-3xl mb-2 text-blue-400"></i><p>Tableau</p></div>
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fas fa-search-dollar text-3xl mb-2 text-purple-400"></i><p>Statistics</p></div>
+                </div>
             </div>
+            <!-- Databases & Programming -->
             <div>
-                <p>SQL</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" data-value="90%"></div></div>
-            </div>
-            <div>
-                <p>Power BI</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" data-value="88%"></div></div>
-            </div>
-            <div>
-                <p>Python</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" data-value="85%"></div></div>
-            </div>
-            <div>
-                <p>Statistics</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" data-value="80%"></div></div>
-            </div>
-            <div>
-                <p>Data Visualization</p>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" data-value="92%"></div></div>
+                <h3 class="text-2xl font-bold text-sky-400 text-center mb-8">Databases & Programming</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fas fa-database text-3xl mb-2 text-sky-300"></i><p>SQL</p></div>
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fab fa-python text-3xl mb-2 text-yellow-300"></i><p>Python</p></div>
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fas fa-book text-3xl mb-2 text-green-300"></i><p>Pandas & NumPy</p></div>
+                    <div class="glass-effect p-6 rounded-lg hover:-translate-y-2 transition-transform"><i class="fas fa-paint-brush text-3xl mb-2 text-red-400"></i><p>Matplotlib</p></div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="experience" class="py-20 bg-slate-900/50" data-aos="fade-up">
+<section id="experience" class="h-screen flex flex-col items-center justify-center bg-slate-900/50" data-aos="fade-up">
     <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-12">Experience</h2>
-        <div class="space-y-8">
-            <div class="glass-effect p-6 rounded-lg">
-                <h3 class="text-2xl font-bold text-sky-400">Data Analyst Intern - XYZ Corp</h3>
-                <p class="text-sm text-slate-400">Jan 2024 - Aug 2024</p>
-                <p>Worked on sales forecasting, created dashboards, cleaned large datasets using SQL & Python.</p>
-            </div>
-            <div class="glass-effect p-6 rounded-lg">
-                <h3 class="text-2xl font-bold text-sky-400">Freelance Data Analyst</h3>
-                <p class="text-sm text-slate-400">2023 - Present</p>
-                <p>Helped clients visualize KPIs and automate reporting workflows in Power BI & Excel.</p>
+        <h2 class="text-4xl font-bold text-center mb-12 text-slate-100">Experience</h2>
+        <div class="relative max-w-2xl mx-auto">
+            <div class="border-l-2 border-sky-500/50 absolute h-full top-0 left-3"></div>
+            <div class="space-y-12">
+                <div class="pl-10 relative">
+                    <div class="absolute w-6 h-6 bg-sky-500 rounded-full -left-0 top-1 border-4 border-slate-900"></div>
+                    <h3 class="text-2xl font-bold text-sky-400">Data Analyst Intern - XYZ Corp</h3>
+                    <p class="text-sm text-slate-400 mb-2">Jan 2024 - Aug 2024</p>
+                    <p class="text-slate-300">Developed interactive Power BI dashboards to track sales KPIs, leading to a 15% improvement in reporting efficiency. Cleaned and preprocessed large datasets using SQL and Python (Pandas), ensuring data quality for predictive modeling.</p>
+                </div>
+                <div class="pl-10 relative">
+                    <div class="absolute w-6 h-6 bg-sky-500 rounded-full -left-0 top-1 border-4 border-slate-900"></div>
+                    <h3 class="text-2xl font-bold text-sky-400">Freelance Data Analyst</h3>
+                    <p class="text-sm text-slate-400 mb-2">2023 - Present</p>
+                    <p class="text-slate-300">Partnered with small businesses to build custom Excel models and Power BI reports, helping clients visualize performance metrics and identify key growth opportunities. Automated reporting workflows, saving clients over 10 hours per week.</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- PROJECTS -->
-<section id="projects" class="py-20" data-aos="fade-up">
+<section id="projects" class="h-screen flex flex-col items-center justify-center" data-aos="fade-up">
     <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-12">Projects</h2>
+        <h2 class="text-4xl font-bold text-center mb-12 text-slate-100">Projects</h2>
         <div class="grid md:grid-cols-2 gap-8">
             <div class="project-card-container">
                 <div class="project-card">
                     <div class="project-card-front glass-effect">
                         <h3 class="text-2xl font-bold text-sky-400 mb-4">Vendor Performance Analysis</h3>
-                        <p>Evaluating supplier efficiency and cost-effectiveness.</p>
+                        <p>An interactive dashboard to evaluate supplier efficiency, on-time delivery, and cost-effectiveness.</p>
                     </div>
-                    <div class="project-card-back flex flex-col justify-between p-6">
-                        <p>Built a dashboard using Power BI to monitor KPIs.</p>
-                        <a href="#" class="text-sky-400 underline">View Project</a>
+                    <div class="project-card-back flex flex-col justify-center p-6">
+                        <p class="mb-4">Built with Power BI, this dashboard integrates data from multiple sources to provide a holistic view of vendor performance, enabling better negotiation and procurement strategies.</p>
+                        <a href="#" class="text-sky-400 underline font-semibold hover:text-sky-300">View Project</a>
                     </div>
                 </div>
             </div>
             <div class="project-card-container">
                 <div class="project-card">
                     <div class="project-card-front glass-effect">
-                        <h3 class="text-2xl font-bold text-sky-400 mb-4">Sales Dashboard</h3>
-                        <p>Dynamic dashboard with slicers & KPIs.</p>
+                        <h3 class="text-2xl font-bold text-sky-400 mb-4">Customer Churn Prediction</h3>
+                        <p>A Python-based model to predict customer churn using historical data and machine learning.</p>
                     </div>
-                    <div class="project-card-back flex flex-col justify-between p-6">
-                        <p>Cleaned & analyzed sales data using Excel & Power BI.</p>
-                        <a href="#" class="text-sky-400 underline">View Project</a>
+                    <div class="project-card-back flex flex-col justify-center p-6">
+                        <p class="mb-4">Utilized Pandas for data wrangling and Scikit-learn for building a logistic regression model. The project identified key drivers of churn, helping focus retention efforts.</p>
+                        <a href="#" class="text-sky-400 underline font-semibold hover:text-sky-300">View on GitHub</a>
                     </div>
                 </div>
             </div>
@@ -155,16 +259,16 @@ header { position: fixed; width: 100%; top: 0; left: 0; z-index: 50; background-
 </section>
 
 <!-- CERTIFICATIONS -->
-<section id="certifications" class="py-20 bg-slate-900/50" data-aos="fade-up">
+<section id="certifications" class="h-screen flex flex-col items-center justify-center bg-slate-900/50" data-aos="fade-up">
     <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-12">Certifications</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-            <div class="glass-effect p-6 rounded-lg">
-                <h3 class="text-xl font-bold">Introduction to Data Analyst</h3>
+        <h2 class="text-4xl font-bold text-center mb-12 text-slate-100">Certifications</h2>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="glass-effect p-6 rounded-lg text-center">
+                <h3 class="text-xl font-bold text-slate-100">Introduction to Data Analyst</h3>
                 <p class="text-slate-300">SimpliLearn</p>
             </div>
-            <div class="glass-effect p-6 rounded-lg">
-                <h3 class="text-xl font-bold">Power BI Workshop</h3>
+            <div class="glass-effect p-6 rounded-lg text-center">
+                <h3 class="text-xl font-bold text-slate-100">Power BI for Business Intelligence</h3>
                 <p class="text-slate-300">Office Master</p>
             </div>
         </div>
@@ -172,55 +276,58 @@ header { position: fixed; width: 100%; top: 0; left: 0; z-index: 50; background-
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="py-20" data-aos="fade-up">
+<section id="contact" class="h-screen flex flex-col items-center justify-center" data-aos="fade-up">
     <div class="container mx-auto px-6 text-center max-w-xl">
-        <h2 class="text-4xl font-bold mb-8">Get In Touch</h2>
+        <h2 class="text-4xl font-bold mb-8 text-slate-100">Get In Touch</h2>
+        <p class="text-slate-400 mb-8">Have a question or want to work together? Feel free to reach out!</p>
         <div class="flex justify-center gap-8 mb-8">
-            <a href="https://github.com/" class="text-3xl hover:text-sky-400"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/dileep-suthar" class="text-3xl hover:text-sky-400"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/" target="_blank" class="text-4xl text-slate-400 hover:text-sky-400 transition-colors"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/dileep-suthar" target="_blank" class="text-4xl text-slate-400 hover:text-sky-400 transition-colors"><i class="fab fa-linkedin"></i></a>
         </div>
         <form class="space-y-4" id="contactForm">
-            <input type="text" placeholder="Your Name" required class="w-full p-3 rounded bg-slate-800 border border-slate-600">
-            <input type="email" placeholder="Your Email" required class="w-full p-3 rounded bg-slate-800 border border-slate-600">
-            <textarea placeholder="Your Message" rows="4" required class="w-full p-3 rounded bg-slate-800 border border-slate-600"></textarea>
-            <button class="bg-sky-600 hover:bg-sky-500 text-white px-6 py-3 rounded-full">Send Message</button>
-            <p id="successMsg" class="hidden text-green-400 font-bold mt-4">Message Sent! ✅</p>
+            <input type="text" placeholder="Your Name" required class="w-full p-3 rounded-md bg-slate-800 border border-slate-600 focus:ring-2 focus:ring-sky-500 focus:outline-none transition">
+            <input type="email" placeholder="Your Email" required class="w-full p-3 rounded-md bg-slate-800 border border-slate-600 focus:ring-2 focus:ring-sky-500 focus:outline-none transition">
+            <textarea placeholder="Your Message" rows="4" required class="w-full p-3 rounded-md bg-slate-800 border-slate-600 focus:ring-2 focus:ring-sky-500 focus:outline-none transition"></textarea>
+            <button type="submit" class="bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 rounded-full transition-transform transform hover:scale-105">Send Message</button>
+            <p id="successMsg" class="hidden text-green-400 font-bold mt-4">Message Sent! Thank you. ✅</p>
         </form>
     </div>
+    <footer class="text-center py-6 mt-12 border-t border-slate-800 w-full">
+        <p class="text-slate-500 text-sm">&copy; 2025 Dileep Suthar. All Rights Reserved.</p>
+    </footer>
 </section>
-
-<!-- FOOTER -->
-<footer class="text-center py-6">
-    <p class="text-slate-500 text-sm">&copy; 2025 Dileep Suthar. All Rights Reserved.</p>
-</footer>
 
 <!-- SCRIPTS -->
 <script>
-AOS.init();
+// Initialize Animate on Scroll library
+AOS.init({
+    duration: 750,
+    once: true,
+});
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Typed.js for the animated text in the hero section
     new Typed('#typed-text', {
-        strings: ["Data Analyst", "Business Intelligence Enthusiast", "Problem Solver"],
-        typeSpeed: 50, backSpeed: 25, backDelay: 1500, loop: true
+        strings: ["Data Analyst", "BI Developer", "Problem Solver"],
+        typeSpeed: 60,
+        backSpeed: 30,
+        backDelay: 2000,
+        loop: true
     });
 
-    // Animate skill bars
-    const skillSection = document.querySelector('#skills');
-    const bars = document.querySelectorAll('.progress-bar-fill');
-    function animateBars() {
-        if (skillSection.getBoundingClientRect().top < window.innerHeight) {
-            bars.forEach(bar => { bar.style.width = bar.dataset.value; });
-            window.removeEventListener('scroll', animateBars);
-        }
+    // Contact form fake submission for demonstration purposes
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const successMsg = document.getElementById('successMsg');
+            successMsg.classList.remove('hidden');
+            setTimeout(() => {
+                successMsg.classList.add('hidden');
+            }, 4000);
+            this.reset();
+        });
     }
-    window.addEventListener('scroll', animateBars);
-
-    // Contact form fake submit
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-        e.preventDefault();
-        document.getElementById('successMsg').classList.remove('hidden');
-        setTimeout(()=> document.getElementById('successMsg').classList.add('hidden'), 3000);
-        this.reset();
-    });
 });
 </script>
 
